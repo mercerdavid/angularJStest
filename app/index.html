@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="product.js"></script>
+    <script type="text/javascript" src="specification.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <title>Gem Store</title>
+</head>
+<body ng-app="store" ng-controller="StoreController as store">
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="product in store.products | orderBy: '-price'" ng-hide="product.soldOut">
+        <h3> {{product.name}} </h3>
+        <em class="pull-right">{{product.price | currency}}</em>
+
+        <button ng-show="product.canPurchase"> Add To Cart</button>
+        </div>
+        <section>
+            <div class="gallery" ng-repeat="image in product.images">
+                <img class="small pull-right img-thumbnail img-circle" ng-src="{{image}}"/>
+            </div>
+        </section>
+        <section ng-controller="PanelController as panel">
+            <ul class="nav nav-pills">
+                <li ng-class="{ active:panel.isSelected(1)}"><a href ng-click="panel.selectTab(1)">Description</a></li>
+                <li ng-class="{ active:panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Specifications</a></li>
+                <li ng-class="{ active:panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)"> Reviews</a></li>
+            </ul>
+            <div class="panel" ng-show="panel.isSelected(1)">
+                <h4>Description</h4>
+
+                <p>{{product.description}}</p>
+            </div>
+            <div ng-show="panel.isSelected(2)">
+            <specification-list></specification-list>
+            </div>
+            <!--  Review Tab's Content  -->
+            <div ng-show="panel.isSelected(3)">
+            <!--  Review Form -->
+            <product-review></product-review>
+            </div>
+
+        </section>
+
+    </li>
+</ul>
+</body>
+</html>
